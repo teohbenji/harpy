@@ -2,9 +2,11 @@
 #Python code to detect string pull, and play the corresponding note.
 
 import serial
-import time
+import musicalbeeps
 
-arduino = serial.Serial(port='COM3', baudrate=115200, timeout=.1) #Baud rate has to match Arduino
+arduino = serial.Serial(port='COM3', baudrate=9600, timeout=.1) #Baud rate has to match Arduino
+player = musicalbeeps.Player(volume = 1,
+                            mute_output = False)
 
 def readArduinoData():
     """Reads Serial monitor data from Arduino, and cleans into Python string.
@@ -13,15 +15,21 @@ def readArduinoData():
         cleaned_str: Content of string matches Serial.print output in Arduino 
     """
     data = arduino.readline() #returns data as bytes
-    cleaned_str = str(data.decode("utf-8"))
+    cleaned_str = str(data.decode("utf-8")).strip()
     return cleaned_str
 
-# def checkIfStringPulled():
-#     value = readArduinoData()
-#     if(value == "C1"):
-#         print("Plays music!!!!!!!")
-
-while True:
+def playNote(note):
     value = readArduinoData()
-    print(value, type(value))
-    time.sleep(0.2)
+    while value == note:
+        value = readArduinoData()
+    player.play_note(note, 0.5)
+
+
+def main():
+    while True:
+        value = readArduinoData()
+        print(value, type(value), len(value))
+        if (value in ["C", "D", "E", "F", "G", "A", "B"]):
+            playNote(value)
+
+main()
