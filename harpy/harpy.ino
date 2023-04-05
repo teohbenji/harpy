@@ -21,7 +21,7 @@ void setup() {
   Serial.begin(9600); //Baud rate has to match Python
   
   FastLED.addLeds<WS2812, LED_PIN_7, GRB>(leds_7, NUM_LEDS);
-  FastLED.setBrightness(122);
+  FastLED.setBrightness(255);
   
   limitSwitch1.setDebounceTime(50); // set debounce time to 50 milliseconds
   limitSwitch2.setDebounceTime(50); // set debounce time to 50 milliseconds
@@ -33,12 +33,12 @@ void setup() {
 }
 
 void loop() {
-  detectString1Pull();
-  detectString2Pull();
-  detectString3Pull();
-  detectString4Pull();
-  detectString5Pull();
-  detectString6Pull();
+  // detectString1Pull();
+  // detectString2Pull();
+  // detectString3Pull();
+  // detectString4Pull();
+  // detectString5Pull();
+  // detectString6Pull();
   detectString7Pull();
 }
 
@@ -52,10 +52,10 @@ void detectString1Pull(){
       }
   else {
     while(state == 1) {
-      Serial.println("C");
       limitSwitch1.loop();
       state = limitSwitch1.getState();
     }
+    Serial.println("C");
     // blinkLedStrip(leds_1, rgb);
   }
 }
@@ -70,10 +70,10 @@ void detectString2Pull(){
       }
   else {
     while(state == 1) {
-      Serial.println("D");
       limitSwitch2.loop();
       state = limitSwitch2.getState();
     }
+    Serial.println("D");
     // blinkLedStrip(leds_2, rgb);
   }
 }
@@ -88,10 +88,10 @@ void detectString3Pull()  {
       }
   else {
     while(state == 1) {
-      Serial.println("E");
       limitSwitch3.loop();
       state = limitSwitch3.getState();
     }
+    Serial.println("E");
     // blinkLedStrip(leds_3, rgb);
   }
 }
@@ -106,10 +106,10 @@ void detectString4Pull()  {
       }
   else {
     while(state == 1) {
-      Serial.println("F");
       limitSwitch4.loop();
       state = limitSwitch4.getState();
     }
+    Serial.println("F");
     // blinkLedStrip(leds_4, rgb);
   }
 }
@@ -124,10 +124,10 @@ void detectString5Pull()  {
       }
   else {
     while(state == 1) {
-      Serial.println("G");
       limitSwitch5.loop();
       state = limitSwitch5.getState();
     }
+    Serial.println("G");
     // blinkLedStrip(leds_5, rgb);
   }
 }
@@ -142,10 +142,10 @@ void detectString6Pull() {
       }
   else {
     while(state == 1) {
-      Serial.println("A");
       limitSwitch6.loop();
       state = limitSwitch6.getState();
     }
+    Serial.println("A");
     // blinkLedStrip(leds_6, rgb);
   }
 }
@@ -160,16 +160,16 @@ void detectString7Pull() {
       }
   else {
     while(state == 1) {
-      Serial.println("B");
       limitSwitch7.loop();
       state = limitSwitch7.getState();
     }
+    Serial.println("B");
     blinkLedStrip(leds_7, rgb);
   }
 }
 
 void blinkLedStrip(CRGB leds[], int rgb[]) {
-  //turns on LED for 0.25s
+  //turns on LED for 0.5s
   for(int i = 0; i < NUM_LEDS; i++) {
     leds[i] = CRGB(rgb[0], rgb[1], rgb[2]);
   }

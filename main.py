@@ -19,11 +19,7 @@ def readArduinoData():
     return cleaned_str
 
 def playNote(note):
-    value = readArduinoData()
-    while value == note:
-        value = readArduinoData()
     player.play_note(note, 0.5)
-
 
 def main():
     while True:
