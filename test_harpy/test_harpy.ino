@@ -1,11 +1,11 @@
 #include <FastLED.h>
 #include <ezButton.h>
 
-#define LED_PIN     2
+#define LED_PIN     8
 #define NUM_LEDS    26
 
 CRGB leds[NUM_LEDS];
-ezButton limitSwitch(13);
+ezButton limitSwitch(7);
 
 void setup(){
   Serial.begin(9600);
@@ -13,24 +13,6 @@ void setup(){
   FastLED.addLeds<WS2812, LED_PIN, GRB>(leds, NUM_LEDS);
   FastLED.setBrightness(180);
   }
-
-void loop(){
-  int rgb[] = {255, 0, 0};
-  testblinkLedStrip(leds, rgb);
-  int rgb2[] = {255, 165, 0};
-  testblinkLedStrip(leds, rgb2);
-  int rgb3[] = {255, 255, 0};
-  testblinkLedStrip(leds, rgb3);
-  int rgb4[] = {0, 128, 0};
-  testblinkLedStrip(leds, rgb4);
-  int rgb5[] = {0, 0, 255};
-  testblinkLedStrip(leds, rgb5);
-  int rgb6[] = {75, 0, 130};
-  testblinkLedStrip(leds, rgb6);
-  int rgb7[] = {238, 130, 238};
-  testblinkLedStrip(leds, rgb7);
-  // test_switch();
-}
 
 void test_switch() {
    limitSwitch.loop(); // MUST call the loop() function first
@@ -63,3 +45,26 @@ void testblinkLedStrip(CRGB leds[], int rgb[]) {
   FastLED.show();
   delay(500);
 }
+
+void blinkLedStripRainbow(CRGB leds[]) {
+  int rgb[] = {255, 0, 0};
+  testblinkLedStrip(leds, rgb);
+  int rgb2[] = {255, 165, 0};
+  testblinkLedStrip(leds, rgb2);
+  int rgb3[] = {255, 255, 0};
+  testblinkLedStrip(leds, rgb3);
+  int rgb4[] = {0, 128, 0};
+  testblinkLedStrip(leds, rgb4);
+  int rgb5[] = {0, 0, 255};
+  testblinkLedStrip(leds, rgb5);
+  int rgb6[] = {75, 0, 130};
+  testblinkLedStrip(leds, rgb6);
+  int rgb7[] = {238, 130, 238};
+  testblinkLedStrip(leds, rgb7);
+}
+
+void loop(){ 
+  blinkLedStripRainbow(leds);
+  // test_switch();
+}
+
