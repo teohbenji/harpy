@@ -102,8 +102,7 @@ void checkReleasedStrsList(){
     int releasedStrNum = releasedStrsList.get(i);
     //append back to idleStrsList
     idleStrsList.add(releasedStrNum);
-    String note = getMusicalNote(releasedStrNum);
-    Serial.println(note);
+    Serial.println(getMusicalNote(releasedStrNum));
   }
   //light up LED
   releasedStrsList.clear();
