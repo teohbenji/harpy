@@ -26,9 +26,7 @@ if __name__ == '__main__':
     while True:
         value = readArduinoData()
         print(value, type(value), len(value))
-        if value=="C":
-            Thread(target=playNote, args=("C",)).start()
-        elif value=="E":
-            Thread(target=playNote, args=("E",)).start()
-        elif value=="G":
-            Thread(target=playNote, args=("G",)).start()
+        
+        isValueNote = value in ["C", "E", "G"]
+        if isValueNote:
+            Thread(target=playNote, args=(value,)).start()

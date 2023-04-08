@@ -6,39 +6,35 @@ ezButton limitSwitch2(11);
 ezButton limitSwitch3(9);
 
 //Variables used for computation
-LinkedList<int> idleStrsList = LinkedList<int>();
-LinkedList<int> pulledStrsList = LinkedList<int>();
-LinkedList<int> releasedStrsList = LinkedList<int>();
+LinkedList<String> idleStrsList;
+LinkedList<String> pulledStrsList;
+LinkedList<String> releasedStrsList;
 
 void setup() {
   Serial.begin(9600);
-
-  pinMode(A0, OUTPUT);
-  pinMode(A2, OUTPUT);
-  pinMode(A4, OUTPUT);
 
   limitSwitch1.setDebounceTime(50);
   limitSwitch2.setDebounceTime(50);
   limitSwitch3.setDebounceTime(50);
 
-  int numOfSwitches = 3;
-  //Populate idleStrsList with all switches.
-  for(int i = 1; i < numOfSwitches + 1; i++){
-    idleStrsList.add(i);
+  int numOfStrs = 3;
+  String strsArr[] = {"C", "E", "G"};
+  //Populate idleStrsList with all strings.
+  for(int i = 0; i < numOfStrs; i++){
+    idleStrsList.add(strsArr[i]);
   }
 }
 
-int get_limit_switch_state(int switchNum) {
-  switch(switchNum) {
-    case 1:
-      limitSwitch1.loop();
-      return limitSwitch1.getState();
-    case 2:
-      limitSwitch2.loop();
-      return limitSwitch2.getState();
-    case 3:
-      limitSwitch3.loop();
-      return limitSwitch3.getState();
+int get_limit_switch_state(String str) {
+  if (str == "C") {
+    limitSwitch1.loop();
+    return limitSwitch1.getState();
+  } else if (str == "E") {
+    limitSwitch2.loop();
+    return limitSwitch2.getState();
+  } else if (str == "G") {
+    limitSwitch3.loop();
+    return limitSwitch3.getState();
   }
 }
 
@@ -57,67 +53,38 @@ void removeSharedElemsFromList(LinkedList<int>& list1, LinkedList<int>& list2) {
 
 void checkIdleStrsList(){
   for(int index = 0; index < idleStrsList.size(); index++) {
-    int idleStrNum = idleStrsList.get(index);
-    int isStrPulled = get_limit_switch_state(idleStrNum); //returns 1 when pulled
+    String idleStr = idleStrsList.get(index);
+    int isStrPulled = get_limit_switch_state(idleStr); //returns 1 when pulled
     
     //If pulled, remove from idleStrsList, and add to pulledStrsList
     if(isStrPulled) {
       idleStrsList.remove(index);
-      pulledStrsList.add(idleStrNum);
-      //if pulled, turn on corresponding LED
-      if(idleStrNum == 1) {
-        analogWrite(A0, 255);
-      } else if(idleStrNum == 2) {
-        analogWrite(A2, 255);
-      } else {
-        analogWrite(A4, 255);
-      }
+      pulledStrsList.add(idleStr);
     }
   }
 }
 
 void checkPulledStrsList(){
   for(int index = 0; index < pulledStrsList.size(); index++) {
-    int pulledStrNum = pulledStrsList.get(index);
-    int isStrReleased = get_limit_switch_state(pulledStrNum); //returns 0 when pulled
+    String pulledStr = pulledStrsList.get(index);
+    int isStrReleased = get_limit_switch_state(pulledStr); //returns 0 when pulled
     
     //If pulled, remove from pulledStrsList, and add to releasedStrsList
     if(!isStrReleased) {
       pulledStrsList.remove(index);
-      releasedStrsList.add(pulledStrNum);
-      //if released, turn off corresponding LED
-      if(pulledStrNum == 1) {
-        analogWrite(A0, 0);
-      } else if(pulledStrNum == 2) {
-        analogWrite(A2, 0);
-      } else {
-        analogWrite(A4, 0);
-      }
+      releasedStrsList.add(pulledStr);
     }
   }
 }
 
 void checkReleasedStrsList(){
   for(int i = 0; i < releasedStrsList.size(); i++) {
-    int releasedStrNum = releasedStrsList.get(i);
+    String releasedStr = releasedStrsList.get(i);
     //append back to idleStrsList
-    idleStrsList.add(releasedStrNum);
-    Serial.println(getMusicalNote(releasedStrNum));
+    idleStrsList.add(releasedStr);
+    Serial.println(releasedStr);
   }
-  //light up LED
   releasedStrsList.clear();
-}
-
-String getMusicalNote(int strNum) {
-  //return corresponding note to string
-  switch(strNum) {
-    case 1:
-      return "C";
-    case 2:
-      return "E";
-    case 3:
-      return "G";
-  }
 }
 
 void printAllLists() {
