@@ -20,13 +20,13 @@ def readArduinoData():
 def playNote(note):
     player = musicalbeeps.Player(volume = 1,
                             mute_output = False)
-    player.play_note(note, 1)
+    player.play_note(note, 0.5)
 
 if __name__ == '__main__':
     while True:
         value = readArduinoData()
         print(value, type(value), len(value))
         
-        isValueNote = value in ["C", "E", "G"]
+        isValueNote = value in ["C", "D", "E", "F", "G", "A", "B"]
         if isValueNote:
             Thread(target=playNote, args=(value,)).start()

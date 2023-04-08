@@ -1,17 +1,19 @@
 #include <FastLED.h>
 #include <ezButton.h>
 
-#define LED_PIN     8
+#define LED_PIN     49
 #define NUM_LEDS    26
 
 CRGB leds[NUM_LEDS];
-ezButton limitSwitch(7);
+ezButton limitSwitch(13);
 
 void setup(){
   Serial.begin(9600);
   limitSwitch.setDebounceTime(50);
   FastLED.addLeds<WS2812, LED_PIN, GRB>(leds, NUM_LEDS);
   FastLED.setBrightness(180);
+
+  pinMode(A0, OUTPUT);
   }
 
 void test_switch() {
@@ -46,7 +48,7 @@ void testblinkLedStrip(CRGB leds[], int rgb[]) {
   delay(500);
 }
 
-void blinkLedStripRainbow(CRGB leds[]) {
+void rainbowLEDStrip(CRGB leds[]) {
   int rgb[] = {255, 0, 0};
   testblinkLedStrip(leds, rgb);
   int rgb2[] = {255, 165, 0};
@@ -64,7 +66,8 @@ void blinkLedStripRainbow(CRGB leds[]) {
 }
 
 void loop(){ 
-  blinkLedStripRainbow(leds);
-  // test_switch();
+  // // analogWrite(A0, 255);
+  // rainbowLEDStrip(leds);
+  // // test_switch();
 }
 
