@@ -2,22 +2,45 @@
 #include <ezButton.h>
 #include <LinkedList.h>
 
+//First octave
 #define LED_PIN_C3    25
 #define LED_PIN_D3    27
 #define LED_PIN_E3    29
 #define LED_PIN_F3    31
 #define LED_PIN_G3    33
 #define LED_PIN_A3    35
-#define LED_PIN_B3    39
+#define LED_PIN_B3    37
 
-#define LED_PIN_C4    41
-#define LED_PIN_D4    43
-#define LED_PIN_E4    45
-#define LED_PIN_F4    47
-#define LED_PIN_G4    49
-#define LED_PIN_A4    51
-#define LED_PIN_B4    53
+//Second octave
+#define LED_PIN_C4    39
+#define LED_PIN_D4    41
+#define LED_PIN_E4    43
+#define LED_PIN_F4    45
+#define LED_PIN_G4    47
+#define LED_PIN_A4    49
+#define LED_PIN_B4    51
+
 #define NUM_LEDS      26
+
+//g4 led not working
+
+//First octave
+ezButton limitSwitchC3(24);  
+ezButton limitSwitchD3(26);  
+ezButton limitSwitchE3(28);
+ezButton limitSwitchF3(30);  
+ezButton limitSwitchG3(32);  
+ezButton limitSwitchA3(34);  
+ezButton limitSwitchB3(36); 
+
+//Second octave
+ezButton limitSwitchC4(38);  
+ezButton limitSwitchD4(40);  
+ezButton limitSwitchE4(42);
+ezButton limitSwitchF4(44);  
+ezButton limitSwitchG4(46);  
+ezButton limitSwitchA4(48);  
+ezButton limitSwitchB4(50);  
 
 CRGB ledsC3[NUM_LEDS];
 CRGB ledsD3[NUM_LEDS];
@@ -35,22 +58,6 @@ CRGB ledsG4[NUM_LEDS];
 CRGB ledsA4[NUM_LEDS];
 CRGB ledsB4[NUM_LEDS];
 
-ezButton limitSwitchC3(26);  
-ezButton limitSwitchD3(28);  
-ezButton limitSwitchE3(30);
-ezButton limitSwitchF3(32);  
-ezButton limitSwitchG3(34);  
-ezButton limitSwitchA3(36);  
-ezButton limitSwitchB3(38); 
-
-ezButton limitSwitchC4(40);  
-ezButton limitSwitchD4(42);  
-ezButton limitSwitchE4(44);
-ezButton limitSwitchF4(46);  
-ezButton limitSwitchG4(48);  
-ezButton limitSwitchA4(50);  
-ezButton limitSwitchB4(52);  
-
 //Lists used to store string states
 LinkedList<String> idleStrsList;
 LinkedList<String> pulledStrsList;
@@ -67,6 +74,8 @@ int strsRGBArr[14][3]= {{255,0,0}, {255,127,0}, {255,255,0}, {0,255,0}, {0,0,255
 
 LinkedList<unsigned long> releasedStrTimesList;
 LinkedList<int> strCountsList;
+
+int count = 0;
 
 void setup() {
   Serial.begin(9600);
@@ -313,6 +322,24 @@ void turnOffSpecificLEDStrip(CRGB leds[]) {
   FastLED.show();
 }
 
+void turnOffAllLEDs() {
+  turnOffSpecificLEDStrip(ledsC3);
+  turnOffSpecificLEDStrip(ledsD3);
+  turnOffSpecificLEDStrip(ledsE3);
+  turnOffSpecificLEDStrip(ledsF3);
+  turnOffSpecificLEDStrip(ledsG3);
+  turnOffSpecificLEDStrip(ledsA3);
+  turnOffSpecificLEDStrip(ledsB3);
+
+  turnOffSpecificLEDStrip(ledsC4);
+  turnOffSpecificLEDStrip(ledsD4);
+  turnOffSpecificLEDStrip(ledsE4);
+  turnOffSpecificLEDStrip(ledsF4);
+  turnOffSpecificLEDStrip(ledsG4);
+  turnOffSpecificLEDStrip(ledsA4);
+  turnOffSpecificLEDStrip(ledsB4);
+}
+
 void ledsController() {
   //After string pull, turn on corresponding LED for 500ms
   timeNow = millis();
@@ -339,7 +366,13 @@ void ledsController() {
 }
 
 void loop() {
-  // //checkIdleStrsList if its not empty
+  //Turn off all LEDs initially
+  if(count == 0){
+    turnOffAllLEDs();
+    count = 1;
+  }
+
+  //checkIdleStrsList if its not empty
   if(idleStrsList.size() != 0){
     checkIdleStrsList();
   }
