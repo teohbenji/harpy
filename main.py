@@ -28,6 +28,6 @@ if __name__ == '__main__':
         value = readArduinoData()
         print(value, type(value), len(value))
         
-        isValueNote = value in ["C4", "D4", "E4", "F4", "G4", "A4", "B4", "C5", "D5", "E5", "F5", "G5", "A5", "B5"]
+        isValueNote = value in ["C3", "D3", "E3", "F3", "G3", "A3", "B3", "C4", "D4", "E4", "F4", "G4", "A4", "B4"]
         if isValueNote:
             Thread(target=play_note, args=(value,)).start()

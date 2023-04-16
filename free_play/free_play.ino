@@ -3,49 +3,52 @@
 #include <LinkedList.h>
 
 //First octave
-#define LED_PIN_C4    25
-#define LED_PIN_D4    27
-#define LED_PIN_E4    29
-#define LED_PIN_F4    31
-#define LED_PIN_G4    33
-#define LED_PIN_A4    35
-#define LED_PIN_B4    37
+#define LED_PIN_C3    25
+#define LED_PIN_D3    27
+#define LED_PIN_E3    29
+#define LED_PIN_F3    31
+#define LED_PIN_G3    33
+#define LED_PIN_A3    35
+#define LED_PIN_B3    37
 
 //Second octave
-#define LED_PIN_C5    39
-#define LED_PIN_D5    41
-#define LED_PIN_E5    43
-#define LED_PIN_F5    45
-#define LED_PIN_G5    47
-#define LED_PIN_A5    49
-#define LED_PIN_B5    51
+#define LED_PIN_C4    39
+#define LED_PIN_D4    41
+#define LED_PIN_E4    43
+#define LED_PIN_F4    45
+#define LED_PIN_G4    47
+#define LED_PIN_A4    49
+#define LED_PIN_B4    51
 
 #define NUM_LEDS      26
-#define NUM_DISPLAY_LEDS      26
 
-//Display LEDs
-#define DISPLAY_LED_PIN_1    2
-#define DISPLAY_LED_PIN_2    3
-#define DISPLAY_LED_PIN_3    4
-#define DISPLAY_LED_PIN_4    5
+//g4 led not working
 
 //First octave
-ezButton limitSwitchC4(24);  
-ezButton limitSwitchD4(26);  
-ezButton limitSwitchE4(28);
-ezButton limitSwitchF4(30);  
-ezButton limitSwitchG4(32);  
-ezButton limitSwitchA4(34);  
-ezButton limitSwitchB4(36); 
+ezButton limitSwitchC3(24);  
+ezButton limitSwitchD3(26);  
+ezButton limitSwitchE3(28);
+ezButton limitSwitchF3(30);  
+ezButton limitSwitchG3(32);  
+ezButton limitSwitchA3(34);  
+ezButton limitSwitchB3(36); 
 
 //Second octave
-ezButton limitSwitchC5(38);  
-ezButton limitSwitchD5(40);  
-ezButton limitSwitchE5(42);
-ezButton limitSwitchF5(44);  
-ezButton limitSwitchG5(46);  
-ezButton limitSwitchA5(48);  
-ezButton limitSwitchB5(50);  
+ezButton limitSwitchC4(38);  
+ezButton limitSwitchD4(40);  
+ezButton limitSwitchE4(42);
+ezButton limitSwitchF4(44);  
+ezButton limitSwitchG4(46);  
+ezButton limitSwitchA4(48);  
+ezButton limitSwitchB4(50);  
+
+CRGB ledsC3[NUM_LEDS];
+CRGB ledsD3[NUM_LEDS];
+CRGB ledsE3[NUM_LEDS];
+CRGB ledsF3[NUM_LEDS];
+CRGB ledsG3[NUM_LEDS];
+CRGB ledsA3[NUM_LEDS];
+CRGB ledsB3[NUM_LEDS];
 
 CRGB ledsC4[NUM_LEDS];
 CRGB ledsD4[NUM_LEDS];
@@ -54,20 +57,6 @@ CRGB ledsF4[NUM_LEDS];
 CRGB ledsG4[NUM_LEDS];
 CRGB ledsA4[NUM_LEDS];
 CRGB ledsB4[NUM_LEDS];
-
-CRGB ledsC5[NUM_LEDS];
-CRGB ledsD5[NUM_LEDS];
-CRGB ledsE5[NUM_LEDS];
-CRGB ledsF5[NUM_LEDS];
-CRGB ledsG5[NUM_LEDS];
-CRGB ledsA5[NUM_LEDS];
-CRGB ledsB5[NUM_LEDS];
-
-//Display leds #REMEMBER TO CHANGE LED NUM
-CRGB displayLEDs1[NUM_DISPLAY_LEDS];
-CRGB displayLEDs2[NUM_DISPLAY_LEDS];
-CRGB displayLEDs3[NUM_DISPLAY_LEDS];
-CRGB displayLEDs4[NUM_DISPLAY_LEDS];
 
 //Lists used to store string states
 LinkedList<String> idleStrsList;
@@ -79,7 +68,7 @@ const unsigned long ledOnDuration = 500; //standard for all leds, can be varied 
 unsigned long timeNow = 0;
 
 int numOfStrs = 14;
-String allStrsArr[14] = {"C4", "D4", "E4", "F4", "G4", "A4", "B4", "C5", "D5", "E5", "F5", "G5", "A5", "B5"}; 
+String allStrsArr[14] = {"C3", "D3", "E3", "F3", "G3", "A3", "B3", "C4", "D4", "E4", "F4", "G4", "A4", "B4"}; 
 int strsRGBArr[14][3]= {{255,0,0}, {255,127,0}, {255,255,0}, {0,255,0}, {0,0,255}, {75,0,130}, {148,0,211},
                         {255,0,0}, {255,127,0}, {255,255,0}, {0,255,0}, {0,0,255}, {75,0,130}, {148,0,211}};
 
@@ -91,6 +80,14 @@ int count = 0;
 void setup() {
   Serial.begin(9600);
   
+  FastLED.addLeds<WS2812, LED_PIN_C3, GRB>(ledsC3, NUM_LEDS);
+  FastLED.addLeds<WS2812, LED_PIN_D3, GRB>(ledsD3, NUM_LEDS);
+  FastLED.addLeds<WS2812, LED_PIN_E3, GRB>(ledsE3, NUM_LEDS);
+  FastLED.addLeds<WS2812, LED_PIN_F3, GRB>(ledsF3, NUM_LEDS);
+  FastLED.addLeds<WS2812, LED_PIN_G3, GRB>(ledsG3, NUM_LEDS);
+  FastLED.addLeds<WS2812, LED_PIN_A3, GRB>(ledsA3, NUM_LEDS);
+  FastLED.addLeds<WS2812, LED_PIN_B3, GRB>(ledsB3, NUM_LEDS);
+
   FastLED.addLeds<WS2812, LED_PIN_C4, GRB>(ledsC4, NUM_LEDS);
   FastLED.addLeds<WS2812, LED_PIN_D4, GRB>(ledsD4, NUM_LEDS);
   FastLED.addLeds<WS2812, LED_PIN_E4, GRB>(ledsE4, NUM_LEDS);
@@ -98,21 +95,15 @@ void setup() {
   FastLED.addLeds<WS2812, LED_PIN_G4, GRB>(ledsG4, NUM_LEDS);
   FastLED.addLeds<WS2812, LED_PIN_A4, GRB>(ledsA4, NUM_LEDS);
   FastLED.addLeds<WS2812, LED_PIN_B4, GRB>(ledsB4, NUM_LEDS);
-
-  FastLED.addLeds<WS2812, LED_PIN_C5, GRB>(ledsC5, NUM_LEDS);
-  FastLED.addLeds<WS2812, LED_PIN_D5, GRB>(ledsD5, NUM_LEDS);
-  FastLED.addLeds<WS2812, LED_PIN_E5, GRB>(ledsE5, NUM_LEDS);
-  FastLED.addLeds<WS2812, LED_PIN_F5, GRB>(ledsF5, NUM_LEDS);
-  FastLED.addLeds<WS2812, LED_PIN_G5, GRB>(ledsG5, NUM_LEDS);
-  FastLED.addLeds<WS2812, LED_PIN_A5, GRB>(ledsA5, NUM_LEDS);
-  FastLED.addLeds<WS2812, LED_PIN_B5, GRB>(ledsB5, NUM_LEDS);
   FastLED.setBrightness(255);
-
-   //Display LEDs
-  FastLED.addLeds<WS2812, DISPLAY_LED_PIN_1, GRB>(displayLEDs1, NUM_DISPLAY_LEDS);
-  FastLED.addLeds<WS2812, DISPLAY_LED_PIN_2, GRB>(displayLEDs2, NUM_DISPLAY_LEDS);
-  FastLED.addLeds<WS2812, DISPLAY_LED_PIN_3, GRB>(displayLEDs3, NUM_DISPLAY_LEDS);
-  FastLED.addLeds<WS2812, DISPLAY_LED_PIN_4, GRB>(displayLEDs4, NUM_DISPLAY_LEDS);
+  
+  limitSwitchC3.setDebounceTime(50); 
+  limitSwitchD3.setDebounceTime(50); 
+  limitSwitchE3.setDebounceTime(50); 
+  limitSwitchF3.setDebounceTime(50); 
+  limitSwitchG3.setDebounceTime(50); 
+  limitSwitchA3.setDebounceTime(50); 
+  limitSwitchB3.setDebounceTime(50); 
   
   limitSwitchC4.setDebounceTime(50); 
   limitSwitchD4.setDebounceTime(50); 
@@ -121,14 +112,6 @@ void setup() {
   limitSwitchG4.setDebounceTime(50); 
   limitSwitchA4.setDebounceTime(50); 
   limitSwitchB4.setDebounceTime(50); 
-  
-  limitSwitchC5.setDebounceTime(50); 
-  limitSwitchD5.setDebounceTime(50); 
-  limitSwitchE5.setDebounceTime(50); 
-  limitSwitchF5.setDebounceTime(50); 
-  limitSwitchG5.setDebounceTime(50); 
-  limitSwitchA5.setDebounceTime(50); 
-  limitSwitchB5.setDebounceTime(50); 
 
   //Populate idleStrsList with all strings.
   for(int i = 0; i < numOfStrs; i++) {
@@ -143,7 +126,29 @@ void setup() {
 }
 
 int get_limit_switch_state(String str) {
-  if (str == "C4") {
+  if (str == "C3") {
+    limitSwitchC3.loop();
+    return limitSwitchC3.getState();
+  } else if (str == "D3") {
+    limitSwitchD3.loop();
+    return limitSwitchD3.getState();
+  } else if (str == "E3") {
+    limitSwitchE3.loop();
+    return limitSwitchE3.getState();
+  } else if (str == "F3") {
+    limitSwitchF3.loop();
+    return limitSwitchF3.getState();
+  } else if (str == "G3") {
+    limitSwitchG3.loop();
+    return limitSwitchG3.getState();
+  } else if (str == "A3") {
+    limitSwitchA3.loop();
+    return limitSwitchA3.getState();
+  } else if (str == "B3") {
+    limitSwitchB3.loop();
+    return limitSwitchB3.getState();
+
+  } else if (str == "C4") {
     limitSwitchC4.loop();
     return limitSwitchC4.getState();
   } else if (str == "D4") {
@@ -164,28 +169,6 @@ int get_limit_switch_state(String str) {
   } else if (str == "B4") {
     limitSwitchB4.loop();
     return limitSwitchB4.getState();
-
-  } else if (str == "C5") {
-    limitSwitchC5.loop();
-    return limitSwitchC5.getState();
-  } else if (str == "D5") {
-    limitSwitchD5.loop();
-    return limitSwitchD5.getState();
-  } else if (str == "E5") {
-    limitSwitchE5.loop();
-    return limitSwitchE5.getState();
-  } else if (str == "F5") {
-    limitSwitchF5.loop();
-    return limitSwitchF5.getState();
-  } else if (str == "G5") {
-    limitSwitchG5.loop();
-    return limitSwitchG5.getState();
-  } else if (str == "A5") {
-    limitSwitchA5.loop();
-    return limitSwitchA5.getState();
-  } else if (str == "B5") {
-    limitSwitchB5.loop();
-    return limitSwitchB5.getState();
   }
 }
 
@@ -255,7 +238,22 @@ void turnOnLEDStrip(int strIndex) {
   int rgbArr = strsRGBArr[strIndex];
 
   //turnonSpecificLEDStrip based on str name
-  if(str == "C4"){
+  if(str == "C3"){
+    turnOnSpecificLEDStrip(ledsC3, rgbArr);
+  } else if(str == "D3"){
+    turnOnSpecificLEDStrip(ledsD3, rgbArr);
+  } else if(str == "E3"){
+    turnOnSpecificLEDStrip(ledsE3, rgbArr);
+  } else if(str == "F3"){
+    turnOnSpecificLEDStrip(ledsF3, rgbArr);
+  } else if(str == "G3"){
+    turnOnSpecificLEDStrip(ledsG3, rgbArr);
+  } else if(str == "A3"){
+    turnOnSpecificLEDStrip(ledsA3, rgbArr);
+  } else if(str == "B3"){
+    turnOnSpecificLEDStrip(ledsB3, rgbArr);
+
+  } else if(str == "C4"){
     turnOnSpecificLEDStrip(ledsC4, rgbArr);
   } else if(str == "D4"){
     turnOnSpecificLEDStrip(ledsD4, rgbArr);
@@ -269,22 +267,6 @@ void turnOnLEDStrip(int strIndex) {
     turnOnSpecificLEDStrip(ledsA4, rgbArr);
   } else if(str == "B4"){
     turnOnSpecificLEDStrip(ledsB4, rgbArr);
-  }
-
-  else if(str == "C5"){
-    turnOnSpecificLEDStrip(ledsC5, rgbArr);
-  } else if(str == "D5"){
-    turnOnSpecificLEDStrip(ledsD5, rgbArr);
-  } else if(str == "E5"){
-    turnOnSpecificLEDStrip(ledsE5, rgbArr);
-  } else if(str == "F5"){
-    turnOnSpecificLEDStrip(ledsF5, rgbArr);
-  } else if(str == "G5"){
-    turnOnSpecificLEDStrip(ledsG5, rgbArr);
-  } else if(str == "A5"){
-    turnOnSpecificLEDStrip(ledsA5, rgbArr);
-  } else if(str == "B5"){
-    turnOnSpecificLEDStrip(ledsB5, rgbArr);
   }
 }
 
@@ -301,7 +283,22 @@ void turnOffLEDStrip(int strIndex) {
   int rgbArr = strsRGBArr[strIndex];
 
   //turnoffSpecificLEDStrip based on str name
-  if(str == "C4"){
+  if(str == "C3"){
+    turnOffSpecificLEDStrip(ledsC3);
+  } else if(str == "D3"){
+    turnOffSpecificLEDStrip(ledsD3);
+  } else if(str == "E3"){
+    turnOffSpecificLEDStrip(ledsE3);
+  } else if(str == "F3"){
+    turnOffSpecificLEDStrip(ledsF3);
+  } else if(str == "G3"){
+    turnOffSpecificLEDStrip(ledsG3);
+  } else if(str == "A3"){
+    turnOffSpecificLEDStrip(ledsA3);
+  } else if(str == "B3"){
+    turnOffSpecificLEDStrip(ledsB3);
+
+  } else if(str == "C4"){
     turnOffSpecificLEDStrip(ledsC4);
   } else if(str == "D4"){
     turnOffSpecificLEDStrip(ledsD4);
@@ -316,22 +313,6 @@ void turnOffLEDStrip(int strIndex) {
   } else if(str == "B4"){
     turnOffSpecificLEDStrip(ledsB4);
   }
-
-  else if(str == "C5"){
-    turnOffSpecificLEDStrip(ledsC5);
-  } else if(str == "D5"){
-    turnOffSpecificLEDStrip(ledsD5);
-  } else if(str == "E5"){
-    turnOffSpecificLEDStrip(ledsE5);
-  } else if(str == "F5"){
-    turnOffSpecificLEDStrip(ledsF5);
-  } else if(str == "G5"){
-    turnOffSpecificLEDStrip(ledsG5);
-  } else if(str == "A5"){
-    turnOffSpecificLEDStrip(ledsA5);
-  } else if(str == "B5"){
-    turnOffSpecificLEDStrip(ledsB5);
-  }
 }
 
 void turnOffSpecificLEDStrip(CRGB leds[]) {
@@ -342,6 +323,14 @@ void turnOffSpecificLEDStrip(CRGB leds[]) {
 }
 
 void turnOffAllLEDs() {
+  turnOffSpecificLEDStrip(ledsC3);
+  turnOffSpecificLEDStrip(ledsD3);
+  turnOffSpecificLEDStrip(ledsE3);
+  turnOffSpecificLEDStrip(ledsF3);
+  turnOffSpecificLEDStrip(ledsG3);
+  turnOffSpecificLEDStrip(ledsA3);
+  turnOffSpecificLEDStrip(ledsB3);
+
   turnOffSpecificLEDStrip(ledsC4);
   turnOffSpecificLEDStrip(ledsD4);
   turnOffSpecificLEDStrip(ledsE4);
@@ -349,14 +338,6 @@ void turnOffAllLEDs() {
   turnOffSpecificLEDStrip(ledsG4);
   turnOffSpecificLEDStrip(ledsA4);
   turnOffSpecificLEDStrip(ledsB4);
-
-  turnOffSpecificLEDStrip(ledsC5);
-  turnOffSpecificLEDStrip(ledsD5);
-  turnOffSpecificLEDStrip(ledsE5);
-  turnOffSpecificLEDStrip(ledsF5);
-  turnOffSpecificLEDStrip(ledsG5);
-  turnOffSpecificLEDStrip(ledsA5);
-  turnOffSpecificLEDStrip(ledsB5);
 }
 
 void ledsController() {
@@ -382,14 +363,6 @@ void ledsController() {
       } 
     }
   }
-}
-
-void turnOnBottomLEDs(){
-  int rgb[] = {255,127,0};
-  turnOnSpecificLEDStrip(displayLEDs1, rgb);
-  turnOnSpecificLEDStrip(displayLEDs2, rgb);
-  turnOnSpecificLEDStrip(displayLEDs3, rgb);
-  turnOnSpecificLEDStrip(displayLEDs4, rgb);
 }
 
 void loop() {
