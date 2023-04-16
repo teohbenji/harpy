@@ -20,6 +20,13 @@
 #define LED_PIN_B5    51
 
 #define NUM_LEDS      26
+#define NUM_DISPLAY_LEDS      26
+
+//Display LEDs
+#define DISPLAY_LED_PIN_1    2
+#define DISPLAY_LED_PIN_2    3
+#define DISPLAY_LED_PIN_3    4
+#define DISPLAY_LED_PIN_4    5
 
 //First octave
 ezButton limitSwitchC4(24);  
@@ -39,6 +46,7 @@ ezButton limitSwitchG5(46);
 ezButton limitSwitchA5(48);  
 ezButton limitSwitchB5(50);  
 
+//First octave
 CRGB ledsC4[NUM_LEDS];
 CRGB ledsD4[NUM_LEDS];
 CRGB ledsE4[NUM_LEDS];
@@ -47,6 +55,7 @@ CRGB ledsG4[NUM_LEDS];
 CRGB ledsA4[NUM_LEDS];
 CRGB ledsB4[NUM_LEDS];
 
+//Second octave
 CRGB ledsC5[NUM_LEDS];
 CRGB ledsD5[NUM_LEDS];
 CRGB ledsE5[NUM_LEDS];
@@ -54,6 +63,12 @@ CRGB ledsF5[NUM_LEDS];
 CRGB ledsG5[NUM_LEDS];
 CRGB ledsA5[NUM_LEDS];
 CRGB ledsB5[NUM_LEDS];
+
+//Display leds #REMEMBER TO CHANGE LED NUM
+CRGB displayLEDs1[NUM_DISPLAY_LEDS];
+CRGB displayLEDs2[NUM_DISPLAY_LEDS];
+CRGB displayLEDs3[NUM_DISPLAY_LEDS];
+CRGB displayLEDs4[NUM_DISPLAY_LEDS];
 
 int numOfStrs = 14;
 String allStrsArr[14] = {"C4", "D4", "E4", "F4", "G4", "A4", "B4", "C5", "D5", "E5", "F5", "G5", "A5", "B5"}; 
@@ -85,6 +100,12 @@ void setup() {
   FastLED.addLeds<WS2812, LED_PIN_A5, GRB>(ledsA5, NUM_LEDS);
   FastLED.addLeds<WS2812, LED_PIN_B5, GRB>(ledsB5, NUM_LEDS);
   FastLED.setBrightness(255);
+
+  //Display LEDs
+  FastLED.addLeds<WS2812, DISPLAY_LED_PIN_1, GRB>(displayLEDs1, NUM_DISPLAY_LEDS);
+  FastLED.addLeds<WS2812, DISPLAY_LED_PIN_2, GRB>(displayLEDs2, NUM_DISPLAY_LEDS);
+  FastLED.addLeds<WS2812, DISPLAY_LED_PIN_3, GRB>(displayLEDs3, NUM_DISPLAY_LEDS);
+  FastLED.addLeds<WS2812, DISPLAY_LED_PIN_4, GRB>(displayLEDs4, NUM_DISPLAY_LEDS);
   
   limitSwitchC4.setDebounceTime(50); 
   limitSwitchD4.setDebounceTime(50); 
@@ -213,6 +234,7 @@ void turnOnLEDStrip(int strIndex) {
     turnOnSpecificLEDStrip(ledsA5, rgbArr);
   } else if(str == "B5"){
     turnOnSpecificLEDStrip(ledsB5, rgbArr);
+  }
 }
 
 void turnOnSpecificLEDStrip(CRGB leds[], int rgb[]) {
@@ -228,35 +250,36 @@ void turnOffLEDStrip(int strIndex) {
 
   //turnoffSpecificLEDStrip based on str name
   if(str == "C4"){
-    turnOffSpecificLEDStrip(ledsC4, rgbArr);
+    turnOffSpecificLEDStrip(ledsC4);
   } else if(str == "D4"){
-    turnOffSpecificLEDStrip(ledsD4, rgbArr);
+    turnOffSpecificLEDStrip(ledsD4);
   } else if(str == "E4"){
-    turnOffSpecificLEDStrip(ledsE4, rgbArr);
+    turnOffSpecificLEDStrip(ledsE4);
   } else if(str == "F4"){
-    turnOffSpecificLEDStrip(ledsF4, rgbArr);
+    turnOffSpecificLEDStrip(ledsF4);
   } else if(str == "G4"){
-    turnOffSpecificLEDStrip(ledsG4, rgbArr);
+    turnOffSpecificLEDStrip(ledsG4);
   } else if(str == "A4"){
-    turnOffSpecificLEDStrip(ledsA4, rgbArr);
+    turnOffSpecificLEDStrip(ledsA4);
   } else if(str == "B4"){
-    turnOffSpecificLEDStrip(ledsB4, rgbArr);
+    turnOffSpecificLEDStrip(ledsB4);
   }
 
   else if(str == "C5"){
-    turnOffSpecificLEDStrip(ledsC5, rgbArr);
+    turnOffSpecificLEDStrip(ledsC5);
   } else if(str == "D5"){
-    turnOffSpecificLEDStrip(ledsD5, rgbArr);
+    turnOffSpecificLEDStrip(ledsD5);
   } else if(str == "E5"){
-    turnOffSpecificLEDStrip(ledsE5, rgbArr);
+    turnOffSpecificLEDStrip(ledsE5);
   } else if(str == "F5"){
-    turnOffSpecificLEDStrip(ledsF5, rgbArr);
+    turnOffSpecificLEDStrip(ledsF5);
   } else if(str == "G5"){
-    turnOnSpecificLEDStrip(ledsG5, rgbArr);
+    turnOffSpecificLEDStrip(ledsG5);
   } else if(str == "A5"){
-    turnOffSpecificLEDStrip(ledsA5, rgbArr);
+    turnOffSpecificLEDStrip(ledsA5);
   } else if(str == "B5"){
-    turnOffSpecificLEDStrip(ledsB5, rgbArr);
+    turnOffSpecificLEDStrip(ledsB5);
+  }
 }
 
 void turnOffSpecificLEDStrip(CRGB leds[]) {
@@ -267,14 +290,6 @@ void turnOffSpecificLEDStrip(CRGB leds[]) {
 }
 
 void turnOffAllLEDs() {
-  turnOffSpecificLEDStrip(ledsC3);
-  turnOffSpecificLEDStrip(ledsD3);
-  turnOffSpecificLEDStrip(ledsE3);
-  turnOffSpecificLEDStrip(ledsF3);
-  turnOffSpecificLEDStrip(ledsG3);
-  turnOffSpecificLEDStrip(ledsA3);
-  turnOffSpecificLEDStrip(ledsB3);
-
   turnOffSpecificLEDStrip(ledsC4);
   turnOffSpecificLEDStrip(ledsD4);
   turnOffSpecificLEDStrip(ledsE4);
@@ -282,6 +297,14 @@ void turnOffAllLEDs() {
   turnOffSpecificLEDStrip(ledsG4);
   turnOffSpecificLEDStrip(ledsA4);
   turnOffSpecificLEDStrip(ledsB4);
+
+  turnOffSpecificLEDStrip(ledsC5);
+  turnOffSpecificLEDStrip(ledsD5);
+  turnOffSpecificLEDStrip(ledsE5);
+  turnOffSpecificLEDStrip(ledsF5);
+  turnOffSpecificLEDStrip(ledsG5);
+  turnOffSpecificLEDStrip(ledsA5);
+  turnOffSpecificLEDStrip(ledsB5);
 }
 
 void noteSynthesia(String str){
@@ -294,10 +317,19 @@ void noteSynthesia(String str){
   turnOffLEDStrip(strIndex);//turn off led for corresponding note
 }
 
+void turnOnBottomLEDs(){
+  int rgb[] = {255,127,0};
+  turnOnSpecificLEDStrip(displayLEDs1, rgb);
+  turnOnSpecificLEDStrip(displayLEDs2, rgb);
+  turnOnSpecificLEDStrip(displayLEDs3, rgb);
+  turnOnSpecificLEDStrip(displayLEDs4, rgb);  
+}
+
 void loop() {
   //Turn off all LEDs initially
   if(count == 0){
     turnOffAllLEDs();
+    turnOnBottomLEDs();
     count = 1;
   }
   
