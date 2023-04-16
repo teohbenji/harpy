@@ -75,8 +75,6 @@ int strsRGBArr[14][3]= {{255,0,0}, {255,127,0}, {255,255,0}, {0,255,0}, {0,0,255
 LinkedList<unsigned long> releasedStrTimesList;
 LinkedList<int> strCountsList;
 
-int count = 0;
-
 void setup() {
   Serial.begin(9600);
   
@@ -112,6 +110,8 @@ void setup() {
   limitSwitchG4.setDebounceTime(50); 
   limitSwitchA4.setDebounceTime(50); 
   limitSwitchB4.setDebounceTime(50); 
+
+  turnOffAllLEDs();
 
   //Populate idleStrsList with all strings.
   for(int i = 0; i < numOfStrs; i++) {
@@ -366,12 +366,6 @@ void ledsController() {
 }
 
 void loop() {
-  //Turn off all LEDs initially
-  if(count == 0){
-    turnOffAllLEDs();
-    count = 1;
-  }
-
   //checkIdleStrsList if its not empty
   if(idleStrsList.size() != 0){
     checkIdleStrsList();

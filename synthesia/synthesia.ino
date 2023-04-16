@@ -59,8 +59,6 @@ int strsRGBArr[14][3]= {{255,0,0}, {255,127,0}, {255,255,0}, {0,255,0}, {0,0,255
 String notesArr[] = {"C4", "G4", "C4", "D4", "E4", "F4", "E4", "D4", "G3", "A3", "B3", "C4", "D4", "E4", "F4", "E4", "D4", "C4"};
 int numOfNotes = 18;
 
-int count = 0;
-
 void setup() {
   Serial.begin(9600); //Baud rate has to match Python
   
@@ -96,6 +94,8 @@ void setup() {
   limitSwitchG4.setDebounceTime(50); 
   limitSwitchA4.setDebounceTime(50); 
   limitSwitchB4.setDebounceTime(50); 
+
+  turnOffAllLEDs();
 }
 
 void checkStringState(String str, String stateToCheck){
@@ -290,12 +290,6 @@ void noteSynthesia(String str){
 }
 
 void loop() {
-  //Turn off all LEDs initially
-  if(count == 0){
-    turnOffAllLEDs();
-    count = 1;
- }
-
   //loop through notesArr, basically your songsheet
   for(int i = 0; i < numOfNotes; i++){
     String note = notesArr[i];
