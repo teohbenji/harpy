@@ -1,5 +1,6 @@
 #NOTE: Ensure Serial Monitor is not running in IDE.
 #Python code to detect string pull, and play the corresponding note.
+#For freeplay and synthesia modes
 
 import serial
 import musicalbeeps
@@ -17,7 +18,7 @@ def readArduinoData():
     cleaned_str = str(data.decode("utf-8")).strip()
     return cleaned_str
 
-def playNote(note):
+def play_note(note):
     player = musicalbeeps.Player(volume = 1,
                             mute_output = False)
     player.play_note(note, 0.5)
@@ -27,6 +28,6 @@ if __name__ == '__main__':
         value = readArduinoData()
         print(value, type(value), len(value))
         
-        isValueNote = value in ["C", "D", "E", "F", "G", "A", "B"]
+        isValueNote = value in ["C4", "D4", "E4", "F4", "G4", "A4", "B4", "C5", "D5", "E5", "F5", "G5", "A5", "B5"]
         if isValueNote:
-            Thread(target=playNote, args=(value,)).start()
+            Thread(target=play_note, args=(value,)).start()

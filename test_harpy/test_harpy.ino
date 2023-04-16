@@ -1,7 +1,7 @@
 #include <FastLED.h>
 #include <ezButton.h>
 
-#define LED_PIN     49
+#define LED_PIN     3
 #define NUM_LEDS    26
 
 CRGB leds[NUM_LEDS];
@@ -67,7 +67,7 @@ void rainbowLEDStrip(CRGB leds[]) {
 
 void loop(){ 
   // // analogWrite(A0, 255);
-  // rainbowLEDStrip(leds);
+  rainbowLEDStrip(leds);
   // // test_switch();
 }
 
