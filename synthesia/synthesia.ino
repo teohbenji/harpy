@@ -1,21 +1,22 @@
 #include <FastLED.h>
 #include <ezButton.h>
 
-#define LED_PIN_C3    25
-#define LED_PIN_D3    27
-#define LED_PIN_E3    29
-#define LED_PIN_F3    31
-#define LED_PIN_G3    33
-#define LED_PIN_A3    35
-#define LED_PIN_B3    39
+#define LED_PIN_C3    49
+#define LED_PIN_D3    47
+#define LED_PIN_E3    45
+#define LED_PIN_F3    43
+#define LED_PIN_G3    41
+#define LED_PIN_A3    39
+#define LED_PIN_B3    37
 
-#define LED_PIN_C4    41
-#define LED_PIN_D4    43
-#define LED_PIN_E4    45
-#define LED_PIN_F4    47
-#define LED_PIN_G4    49
-#define LED_PIN_A4    51
-#define LED_PIN_B4    53
+//Second octave
+#define LED_PIN_C4    35
+#define LED_PIN_D4    33
+#define LED_PIN_E4    31
+#define LED_PIN_F4    53
+#define LED_PIN_G4    27
+#define LED_PIN_A4    25
+#define LED_PIN_B4    23
 #define NUM_LEDS      26
 
 CRGB ledsC3[NUM_LEDS];
@@ -34,21 +35,23 @@ CRGB ledsG4[NUM_LEDS];
 CRGB ledsA4[NUM_LEDS];
 CRGB ledsB4[NUM_LEDS];
 
-ezButton limitSwitchC3(26);  
-ezButton limitSwitchD3(28);  
-ezButton limitSwitchE3(30);
-ezButton limitSwitchF3(32);  
-ezButton limitSwitchG3(34);  
-ezButton limitSwitchA3(36);  
-ezButton limitSwitchB3(38); 
+//First octave
+ezButton limitSwitchC3(48);  
+ezButton limitSwitchD3(46);  
+ezButton limitSwitchE3(44);
+ezButton limitSwitchF3(42);  
+ezButton limitSwitchG3(40);  
+ezButton limitSwitchA3(38);  
+ezButton limitSwitchB3(36); 
 
-ezButton limitSwitchC4(40);  
-ezButton limitSwitchD4(42);  
-ezButton limitSwitchE4(44);
-ezButton limitSwitchF4(46);  
-ezButton limitSwitchG4(48);  
-ezButton limitSwitchA4(50);  
-ezButton limitSwitchB4(52);  
+//Second octave
+ezButton limitSwitchC4(34);  
+ezButton limitSwitchD4(32);  
+ezButton limitSwitchE4(30);
+ezButton limitSwitchF4(28);  
+ezButton limitSwitchG4(26);  
+ezButton limitSwitchA4(24);  
+ezButton limitSwitchB4(22);  
 
 int numOfStrs = 14;
 String allStrsArr[14] = {"C3", "D3", "E3", "F3", "G3", "A3", "B3", "C4", "D4", "E4", "F4", "G4", "A4", "B4"}; 
