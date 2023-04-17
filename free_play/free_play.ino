@@ -3,44 +3,44 @@
 #include <LinkedList.h>
 
 //First octave
-#define LED_PIN_C3    25
-#define LED_PIN_D3    27
-#define LED_PIN_E3    29
-#define LED_PIN_F3    31
-#define LED_PIN_G3    33
-#define LED_PIN_A3    35
+#define LED_PIN_C3    49
+#define LED_PIN_D3    47
+#define LED_PIN_E3    45
+#define LED_PIN_F3    43
+#define LED_PIN_G3    41
+#define LED_PIN_A3    39
 #define LED_PIN_B3    37
 
 //Second octave
-#define LED_PIN_C4    39
-#define LED_PIN_D4    41
-#define LED_PIN_E4    43
-#define LED_PIN_F4    45
-#define LED_PIN_G4    47
-#define LED_PIN_A4    49
-#define LED_PIN_B4    51
+#define LED_PIN_C4    35
+#define LED_PIN_D4    33
+#define LED_PIN_E4    31
+#define LED_PIN_F4    29
+#define LED_PIN_G4    27
+#define LED_PIN_A4    25
+#define LED_PIN_B4    23
 
 #define NUM_LEDS      26
-
+ 
 //g4 led not working
 
 //First octave
-ezButton limitSwitchC3(24);  
-ezButton limitSwitchD3(26);  
-ezButton limitSwitchE3(28);
-ezButton limitSwitchF3(30);  
-ezButton limitSwitchG3(32);  
-ezButton limitSwitchA3(34);  
+ezButton limitSwitchC3(48);  
+ezButton limitSwitchD3(46);  
+ezButton limitSwitchE3(44);
+ezButton limitSwitchF3(42);  
+ezButton limitSwitchG3(40);  
+ezButton limitSwitchA3(38);  
 ezButton limitSwitchB3(36); 
 
 //Second octave
-ezButton limitSwitchC4(38);  
-ezButton limitSwitchD4(40);  
-ezButton limitSwitchE4(42);
-ezButton limitSwitchF4(44);  
-ezButton limitSwitchG4(46);  
-ezButton limitSwitchA4(48);  
-ezButton limitSwitchB4(50);  
+ezButton limitSwitchC4(34);  
+ezButton limitSwitchD4(32);  
+ezButton limitSwitchE4(30);
+ezButton limitSwitchF4(28);  
+ezButton limitSwitchG4(26);  
+ezButton limitSwitchA4(24);  
+ezButton limitSwitchB4(22);  
 
 CRGB ledsC3[NUM_LEDS];
 CRGB ledsD3[NUM_LEDS];
@@ -110,8 +110,6 @@ void setup() {
   limitSwitchG4.setDebounceTime(50); 
   limitSwitchA4.setDebounceTime(50); 
   limitSwitchB4.setDebounceTime(50); 
-
-  turnOffAllLEDs();
 
   //Populate idleStrsList with all strings.
   for(int i = 0; i < numOfStrs; i++) {
