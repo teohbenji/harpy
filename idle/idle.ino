@@ -8,22 +8,23 @@
 #include <FastLED.h>
 #include <ezButton.h>
 
-#define LED_PIN_C3 49
-#define LED_PIN_D3 47
-#define LED_PIN_E3 45
-#define LED_PIN_F3 43
-#define LED_PIN_G3 41
-#define LED_PIN_A3 39
-#define LED_PIN_B3 37
+//First octave
+#define LED_PIN_C3    49
+#define LED_PIN_D3    47
+#define LED_PIN_E3    45
+#define LED_PIN_F3    43
+#define LED_PIN_G3    41
+#define LED_PIN_A3    39
+#define LED_PIN_B3    37
 
 //Second octave
-#define LED_PIN_C4 35
-#define LED_PIN_D4 33
-#define LED_PIN_E4 31
-#define LED_PIN_F4 53
-#define LED_PIN_G4 27
-#define LED_PIN_A4 25
-#define LED_PIN_B4 23
+#define LED_PIN_C4    35
+#define LED_PIN_D4    33
+#define LED_PIN_E4    31
+#define LED_PIN_F4    29
+#define LED_PIN_G4    27
+#define LED_PIN_A4    52
+#define LED_PIN_B4    23
 
 #define NUM_LEDS 26
 
@@ -234,6 +235,7 @@ void turnOffLEDStrips(){
 
 void loop() {
   delay(5000); // time to run python program
+  unsigned long x = millis();
   Serial.println("===========Program starts===========");
   //loop through notesArr, basically your songsheet
   for (int i = 0; i < numOfNotes; i++) {
@@ -248,6 +250,7 @@ void loop() {
     } else {
       playNote(note); //If single note
     }
+    Serial.println(millis() - x);
   }
   turnOffLEDStrips();
 }  
